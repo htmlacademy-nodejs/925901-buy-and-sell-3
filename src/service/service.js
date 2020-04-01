@@ -1,6 +1,6 @@
 'use strict';
 
-const {Cli} = require(`./cli`);
+const {CLI} = require(`./CLI`);
 const {
   USER_ARGV_INDEX,
   ExitCode,
@@ -15,13 +15,13 @@ if (userArguments.length === 0) {
   runDefaultCommand();
 }
 
-if (!Cli[userCommand]) {
+if (!CLI[userCommand]) {
   runDefaultCommand();
 }
 
-Cli[userCommand].run(commandArgs);
+CLI[userCommand].run(commandArgs);
 
 function runDefaultCommand() {
-  Cli[DEFAULT_COMMAND].run();
-  process.exit(ExitCode.success);
+  CLI[DEFAULT_COMMAND].run();
+  process.exit(ExitCode.SUCCESS);
 }

@@ -48,30 +48,29 @@ const CATEGORIES = [
 ];
 
 const OfferType = {
-  offer: `offer`,
-  sale: `sale`,
+  OFFER: `offer`,
+  SALE: `sale`,
 };
 
-
 const SumRestrict = {
-  min: 1000,
-  max: 100000,
+  MIN: 1000,
+  MAX: 100000,
 };
 
 const PictureRestrict = {
-  min: 1,
-  max: 16,
+  MIN: 1,
+  MAX: 16,
 };
 
 const SentenceRestrict = {
-  min: 1,
-  max: 5,
+  MIN: 1,
+  MAX: 5,
 };
 
 const generateOffers = (amount) => (Array(amount).fill({}).map(() => {
   const titleIndex = getRandomInt(0, TITLES.length - 1);
-  const pictureNumber = getRandomInt(PictureRestrict.min, PictureRestrict.max);
-  const description = shuffleFisherYates(SENTENCES).slice(SentenceRestrict.min, SentenceRestrict.max).join(` `);
+  const pictureNumber = getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX);
+  const description = shuffleFisherYates(SENTENCES).slice(SentenceRestrict.MIN, SentenceRestrict.MAX).join(` `);
   const typeIndex = getRandomInt(0, Object.keys(OfferType).length - 1);
   const categoryesIndex = getRandomInt(0, CATEGORIES.length - 1);
 
@@ -80,7 +79,7 @@ const generateOffers = (amount) => (Array(amount).fill({}).map(() => {
     picture: generatePictureFileName(pictureNumber),
     description,
     type: Object.keys(OfferType)[typeIndex],
-    sum: getRandomInt(SumRestrict.min, SumRestrict.max),
+    sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
     category: [CATEGORIES[categoryesIndex]],
   };
 }));
@@ -95,7 +94,7 @@ module.exports = {
 
     if (offersAmount > OFFERS_AMOUNT_LIMIT) {
       console.log(chalk.red(`Не больше 1000 объявлений`));
-      process.exit(ExitCode.error);
+      process.exit(ExitCode.ERROR);
     }
 
     const mockData = JSON.stringify(generateOffers(offersAmount));
@@ -103,7 +102,7 @@ module.exports = {
     fs.writeFile(FILE_NAME, mockData, (err) => {
       if (err) {
         console.error(chalk.red(`Can't write data to file...`));
-        process.exit(ExitCode.error);
+        process.exit(ExitCode.ERROR);
       }
 
       console.log(chalk.green(`Operation success. File created.`));
