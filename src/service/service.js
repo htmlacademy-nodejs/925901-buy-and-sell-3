@@ -1,6 +1,6 @@
 'use strict';
 
-const {CLI} = require(`./CLI`);
+const {CLI} = require(`./cli`);
 const {
   USER_ARGV_INDEX,
   ExitCode,
